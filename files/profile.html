@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #f3f3f3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .welcome-card {
+        display: block;
+        width: 450px;
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .welcome-card h3 {
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .info p {
+        margin: 5px 0;
+        font-size: 16px;
+      }
+
+      .info span {
+        font-weight: 600;
+      }
+
+      .btn-group-custom {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .btn {
+        width: 48%;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: 500;
+      }
+
+      /* change pass */
+      .modalpass {
+        display: none;
+      }
+      .remove:hover {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="welcome-card">
+      <h3>
+        Welcome,
+        <span id="name_lname"></span>
+      </h3>
+
+      <div class="info">
+        <p><strong>First Name: </strong> <span id="f_name"></span></p>
+        <p><strong>Last Name: </strong><span id="l_name"></span></p>
+        <p><strong>Email: </strong><span id="email"></span></p>
+        <p><strong>Age: </strong><span id="age"></span></p>
+        <p><strong>Gender: </strong><span id="Gender"></span></p>
+      </div>
+
+      <div class="btn-group-custom">
+        <button class="btn btn-danger" id="logoutBtn">Logout</button>
+        <button class="btn btn-primary" id="changePassword">
+          Change Password
+        </button>
+      </div>
+    </div>
+
+    <!-- change pass -->
+    <div
+      class="modalpass container justify-content-center align-items-center vh-100"
+    >
+      <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%">
+        <p
+          class="remove d-flex justify-content-end text-danger"
+          style="font-weight: bold; cursor: pointer"
+        >
+          X
+        </p>
+        <h4 class="text-center mb-4">تغییر رمز عبور</h4>
+
+        <form id="formChangePass">
+          <!-- رمز فعلی -->
+          <div class="mb-3">
+            <label for="currentPassword" class="form-label">رمز فعلی</label>
+            <input
+              type="password"
+              class="form-control"
+              id="currentPassword"
+              placeholder="رمز فعلی خود را وارد کنید"
+            />
+          </div>
+
+          <!-- رمز جدید -->
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">رمز جدید</label>
+            <input
+              type="password"
+              class="form-control"
+              id="newPassword"
+              placeholder="رمز جدید خود را وارد کنید"
+            />
+          </div>
+
+          <!-- تأیید رمز جدید -->
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label"
+              >تأیید رمز جدید</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              placeholder="رمز جدید خود را دوباره وارد کنید"
+            />
+          </div>
+
+          <!-- دکمه تغییر رمز -->
+          <button type="submit" class="btn btn-primary w-100">
+            تغییر رمز عبور
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener("load", () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user) {
+          return (window.location.href = "/files/login.html");
+        }
+
+        const name_lname = document.querySelector("#name_lname");
+        const f_name = document.querySelector("#f_name");
+        const l_name = document.querySelector("#l_name");
+        const email = document.querySelector("#email");
+        const age = document.querySelector("#age");
+        const Gender = document.querySelector("#Gender");
+
+        name_lname.textContent = user.firstName + " " + user.lastName;
+        f_name.textContent = user.firstName;
+        l_name.textContent = user.lastName;
+        email.textContent = user.email;
+        age.textContent = user.age;
+        Gender.textContent = user.gender;
+      });
+
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.href = "/files/login.html";
+      });
+
+      // change pass
+      const changePassword = document.querySelector("#changePassword");
+      const welcome_card = document.querySelector(".welcome-card");
+      const modalpass = document.querySelector(".modalpass");
+      const remove = document.querySelector(".remove");
+      changePassword.addEventListener("click", () => {
+        modalpass.style.display = "flex";
+        welcome_card.style.display = "none";
+      });
+      remove.addEventListener("click", () => {
+        modalpass.style.display = "none";
+        welcome_card.style.display = "block";
+      });
+      modalpass.addEventListener("click", (e) => {
+        if (e.target == modalpass) {
+          modalpass.style.display = "none";
+          welcome_card.style.display = "block";
+        }
+      });
+
+      // for change pass
+      const formChangePass = document.querySelector("#formChangePass");
+      formChangePass.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        const currentPassword =
+          document.querySelector("#currentPassword").value;
+        const newPassword = document.querySelector("#newPassword").value;
+        const confirmPassword =
+          document.querySelector("#confirmPassword").value;
+
+        if (currentPassword != user.password) {
+          return alert("پسورد فعلی شما یک سان نیست");
+        }
+        if (newPassword != confirmPassword) {
+          return alert("پسورد های وارد شده یک سان نیست");
+        }
+
+        try {
+          user.password = newPassword;
+          const response = await fetch(
+            `http://localhost:3000/users/${user.id}`,
+            {
+              method: "PUT",
+              body: JSON.stringify(user),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            },
+          );
+
+          if ((response.ok = true)) {
+            alert("پسورد شما با موفقیت تغیر کرد");
+            modalpass.style.display = "none";
+            welcome_card.style.display = "block";
+            localStorage.setItem("user", JSON.stringify(user));
+          } else {
+            alert("بنابر مشکلات نتوانستیم پسودر را تغیر دهیم دوباره تلاش کنید");
+          }
+        } catch (error) {
+          alert(
+            "با تاسف کی ما نتوانستم ارتباط شما را با سرور بر قرار کنیم دو باره تلاش کنید",
+          );
+        }
+      });
+    </script>
+  </body>
+</html>

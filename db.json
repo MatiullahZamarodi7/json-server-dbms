@@ -1,0 +1,73 @@
+{
+  "users": [
+    {
+      "id": "1772704915146",
+      "firstName": "matiullah",
+      "lastName": "zamarodi",
+      "age": "18",
+      "email": "zamarodi@gmail.com",
+      "password": "654321",
+      "gender": "Male",
+      "role": "admin"
+    },
+    {
+      "firstName": "خجسته",
+      "lastName": "احمدی",
+      "age": "18",
+      "email": "kh@gmail.com",
+      "password": "12345",
+      "role": "user",
+      "id": "1772705180517"
+    },
+    {
+      "id": "1772705208770",
+      "firstName": "zainab",
+      "lastName": "mohammadi",
+      "age": "17",
+      "email": "zainab@gmail.com",
+      "password": "1234",
+      "gender": "Female",
+      "role": "admin"
+    },
+    {
+      "id": "1772705732789",
+      "firstName": "fatima",
+      "lastName": "mohammadi",
+      "age": "18",
+      "email": "fatima@gmail.com",
+      "password": "87654",
+      "gender": "Female",
+      "role": "user"
+    },
+    {
+      "id": "1772705779627",
+      "firstName": "parwin",
+      "lastName": "etemadi",
+      "age": "14",
+      "email": "parwin@gmail.com",
+      "password": "9876",
+      "gender": "Female",
+      "role": "user"
+    },
+    {
+      "id": "1772706143359",
+      "firstName": "fahima",
+      "lastName": "ahmadi",
+      "age": "20",
+      "email": "ali@gmail.com",
+      "password": "654321",
+      "gender": "Female"
+    },
+    {
+      "id": 1772710553425,
+      "firstName": "user",
+      "lastName": "useri",
+      "age": "18",
+      "email": "user@mail",
+      "password": "user",
+      "gender": "Female",
+      "role": "user"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
